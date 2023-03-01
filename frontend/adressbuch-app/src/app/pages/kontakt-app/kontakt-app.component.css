@@ -1,0 +1,27 @@
+i
+{
+  padding: 0px 10px;
+  color: #000;
+  text-decoration: none;
+  font-size: 17px;
+}
+i:hover
+{
+  color: #0daea9;
+}
+
+th
+{
+  color: #0daea9;
+}
+mat-form-field{
+  width: 50%;
+}
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}

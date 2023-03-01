@@ -1,0 +1,18 @@
+.navbar-nav .nav-link.active-link
+{
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.nav-link.active-link-ab{
+  /*color: white;*/
+  font-weight: bold;
+}
+.navbar
+{
+  background-color: #0daea9;
+}
+.navbar-brand
+{
+  color: white;
+}

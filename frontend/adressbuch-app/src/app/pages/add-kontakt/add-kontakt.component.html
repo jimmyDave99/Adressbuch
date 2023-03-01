@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<form (ngSubmit)="postKontakt(); gotoKontakte()" #kontaktForm="ngForm">
+  <div class="title">Kontakt hinzufügen ({{kontaktId}})</div>
+    <mat-form-field appearance="fill">
+      <mat-label><i class="bi bi-person"></i>Name</mat-label>
+      <input matInput [(ngModel)]="kontakt.nachname" required #name="ngModel" name="name" placeholder="Ihre name">
+    </mat-form-field>
+<!--  <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>-->
+  <mat-form-field appearance="fill">
+    <mat-label><i class="bi bi-person"></i>Vorname</mat-label>
+    <input matInput [(ngModel)]="kontakt.vorname" required #vorname="ngModel" name="vorname" placeholder="Ihre vorname">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Anrede</mat-label>
+    <mat-select [(ngModel)]="kontakt.anrede" name="anrede">
+      <mat-option value="Herr" >Herr</mat-option>
+      <mat-option value="Frau" >Frau</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label><i class="bi bi-telephone"></i>Telefon</mat-label>
+    <input matInput [(ngModel)]="kontakt.telefon" required #vorname="ngModel" name="telefon">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label><i class="bi bi-envelope"></i>E-Mail</mat-label>
+    <input matInput [(ngModel)]="kontakt.adresse" required #vorname="ngModel" name="adresse" placeholder="Ihre Email adresse">
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" [disabled]="!kontaktForm.form.valid"
+            class="btn btn-info" >Submit</button>
+
+    <button type="reset" class="btn btn-info res" (click)="gotoKontakte()" >Zurück</button>
+  </div>
+
+</form>
+
+
