@@ -9,9 +9,9 @@ import {RegisterComponent} from "./pages/register/register.component";
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path:'kontakt/:Id',component:KontaktAppComponent},
-  {path:'addKontakt/:Id',component:AddKontaktComponent},
-  {path:'editkontakt/:Id/:IdKontakt',component:AddKontaktComponent}
+  {path:'kontakt',component:KontaktAppComponent},
+  {path:'addKontakt',component:AddKontaktComponent},
+  {path:'editkontakt/:IdKontakt',component:AddKontaktComponent}
 ];
 
 @NgModule({

@@ -5,10 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Table(name = "user")
 @Entity
 @AllArgsConstructor
+@Component
 public class User {
 
     @Id

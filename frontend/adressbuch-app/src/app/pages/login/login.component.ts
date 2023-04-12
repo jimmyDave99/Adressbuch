@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {KontaktElement} from "../kontakt-app/kontaktElement";
 import {MatTableDataSource} from "@angular/material/table";
 import {KontaktService} from "../kontakt-app/kontakt.service";
+import {AuthService} from "../../authentification/AuthService";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,9 @@ export class LoginComponent implements OnInit{
 
   kontakt: KontaktElement;
   user:User = new User();
-  constructor(private route: ActivatedRoute, private loginservice: LoginuserService, private router: Router, private kontaktService:KontaktService) {
+  username: any;
+  constructor(private route: ActivatedRoute, private loginservice: LoginuserService, private router: Router,
+              private kontaktService:KontaktService,private authService: AuthService) {
     this.kontakt = new KontaktElement();
   }
 
@@ -23,16 +26,17 @@ export class LoginComponent implements OnInit{
   }
 
   userLogin(){
-   console.log(this.user);
   this.loginservice.loginUser(this.user).subscribe(data=>{
-    // alert("Login Successfully")
+    const token = data['token'];
+    // Save the JWT token in the local storage
+    this.authService.setToken(token);
+
     this.gotoKontakte();
   },error => alert("Bitte geben Sie richtige Benutzername oder Passwort  "));
-  // })
   }
 
   gotoKontakte(){
-    this.router.navigate(["kontakt/" + this.user.userId]);
+    this.router.navigate(["kontakt/"]);
 
   }
 

@@ -10,10 +10,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class NavbarComponent implements OnInit{
 
-  userId: string = this.route.snapshot.params['Id'];
+  userId: string="";
 
-  constructor(private route: ActivatedRoute, private router: Router ) {
-
+  constructor(private route: ActivatedRoute, private router: Router, private loginUserService: LoginuserService ) {
+    this.userId= loginUserService.getUserName();
   }
 
   ngOnInit(): void {

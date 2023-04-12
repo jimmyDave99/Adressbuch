@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {KontaktElement} from "./kontaktElement";
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,10 @@ export class KontaktService {
 
   getKontakte() {
     return this.httpClient.get<KontaktElement[]>(this.API_URL+this.ENDPOINT_Kontakt)
+  }
+  getKontakteFilter(userId:string) {
+    let params = new HttpParams().set('userId', userId);
+    return this.httpClient.get<KontaktElement[]>(this.API_URL+this.ENDPOINT_Kontakt+"/filter",{ params: params })
   }
   getKontaktById(kontaktID: number) {
     return this.httpClient.get<KontaktElement>(this.API_URL+this.ENDPOINT_Kontakt+"/"+kontaktID)

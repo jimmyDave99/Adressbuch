@@ -24,6 +24,11 @@ public class KontaktController {
         return kontaktService.getKontakte();
     }
 
+    @GetMapping("/kontakte/filter")
+    public List<Kontakt> getKontakteFilter(@RequestParam(name = "userId", required = true) String userId){
+        return kontaktService.getKontaktefilter(userId);
+    }
+
     @GetMapping("/kontakte/{id}")
     public Kontakt getKontake(@PathVariable(value = "id") int kontaktId){
         return kontaktService.getKontakt(kontaktId);

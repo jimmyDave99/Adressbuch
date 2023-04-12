@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {KontaktElement} from "../kontakt-app/kontaktElement";
 import {ActivatedRoute, Router} from "@angular/router";
 import {KontaktService} from "../kontakt-app/kontakt.service";
+import {LoginuserService} from "../login/loginuser.service";
 
 @Component({
   selector: 'app-add-kontakt',
@@ -11,18 +12,18 @@ import {KontaktService} from "../kontakt-app/kontakt.service";
 export class AddKontaktComponent implements OnInit{
   kontakt: KontaktElement;
   kontaktId: number = 0;
-  userId: string = this.route.snapshot.params['Id'];
+  userId: string="";
 
-  constructor(private route: ActivatedRoute, private router: Router, private kontaktservice: KontaktService) {
+  constructor(private route: ActivatedRoute, private router: Router, private kontaktservice: KontaktService, private loginUserService: LoginuserService) {
 
     this.kontakt = new KontaktElement();
+    this.userId = loginUserService.getUserName();
   }
 
   ngOnInit(): void {
     this.kontaktId = +parseInt(this.route.snapshot.params['IdKontakt']);
     this.schowUpdateKontakt();
     this.kontakt.userId=this.userId;
-    console.log(this.userId);
   }
 
   postKontakt(){
@@ -33,10 +34,7 @@ export class AddKontaktComponent implements OnInit{
   }
 
   gotoKontakte(){
-    this.router.navigate(["kontakt/"+ this.userId]);
-    console.log(this.userId+"oogfhdhh");
-    console.log(this.kontakt);
-    // console.log(data.userId);
+    this.router.navigate(["kontakt/"]);
   }
 
   schowUpdateKontakt(){

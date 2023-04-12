@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { KontaktAppComponent } from './pages/kontakt-app/kontakt-app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
@@ -25,6 +25,7 @@ import {FormsModule} from "@angular/forms";
 import { DeleteKontaktComponent } from './pages/delete-kontakt/delete-kontakt.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import {TokenInterceptor} from "./authentification/TokenInterceptor";
 
 
 @NgModule({
@@ -58,7 +59,12 @@ import { RegisterComponent } from './pages/register/register.component';
         MatSelectModule,
         FormsModule,
     ],
-  providers: [],
+  // Hier wird der TokenInterceptor auf alle HTTP-Requests angewendet, die in Ihrem Angular-Frontend gesendet werden.
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

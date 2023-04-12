@@ -13,33 +13,43 @@ import {User} from "../login/user";
   styleUrls: ['./kontakt-app.component.css'],
   providers: [KontaktService]
 })
-export class KontaktAppComponent implements OnInit{
-  displayedColumns: string[] = ['nachname', 'vorname', 'anrede', 'telefon',"adresse","aktione"];
+export class KontaktAppComponent implements OnInit {
+  displayedColumns: string[] = ['nachname', 'vorname', 'anrede', 'telefon', "adresse", "aktione", 'userId'];
+  displayedColumnsNichtAdmin: string[] = ['nachname', 'vorname', 'anrede', 'telefon', "adresse", "aktione"];
 
-  message:any;
+  message: any;
   kontakt: KontaktElement[] = [];
   dataSource = new MatTableDataSource<KontaktElement>();
-  userId: string = this.route.snapshot.params['Id'];
+  // userId: string = this.route.snapshot.params['Id'];
   user: User;
+  isVisible: boolean = false;
 
-  constructor( private route: ActivatedRoute, private kontaktService: KontaktService, private loginUserService: LoginuserService) {
-    this.user =new User();
+  constructor(private route: ActivatedRoute, private kontaktService: KontaktService, private loginUserService: LoginuserService) {
+    this.user = new User();
   }
 
-  ngOnInit(){
-    this.fechtUser();
+  ngOnInit() {
+    // this.fechtUser();
+    console.log(this.loginUserService.getUserRole());
     this.getData();
+
   }
 
   private getData() {
-    this.kontaktService.getKontakte().subscribe((datas: KontaktElement[]) => {
-      if(this.user.role==="ADMIN"){
+
+    if (this.loginUserService.getUserRole()=="ADMIN"){
+      this.kontaktService.getKontakte().subscribe((datas: KontaktElement[]) => {
         this.kontakt = datas;
-      }else {
-        this.kontakt = datas.filter((value)=>value.userId===this.userId);
-      }
-      this.dataSource = new MatTableDataSource(this.kontakt);
-    });
+        this.dataSource = new MatTableDataSource(this.kontakt);
+        this.isVisible = true;
+      });
+    }else {
+      this.kontaktService.getKontakteFilter(this.loginUserService.getUserName()).subscribe((datas: KontaktElement[]) => {
+        this.kontakt = datas;
+        this.dataSource = new MatTableDataSource(this.kontakt);
+      });
+    }
+
   }
 
   applyFilter(event: Event) {
@@ -47,15 +57,18 @@ export class KontaktAppComponent implements OnInit{
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  delete(kontaktId:any){
-    this.message = {type:'confirm', text:'Möchten Sie diesen Kontakt wirklich löschen?',
-      id:kontaktId
+  delete(kontaktId: any) {
+    this.message = {
+      type: 'confirm', text: 'Möchten Sie diesen Kontakt wirklich löschen?',
+      id: kontaktId
     }
   }
-  fechtUser(){
-    this.loginUserService.getUserById(this.userId).subscribe(data=>{
-      this.user = data;
-    })
-  }
+
+  // fechtUser() {
+  //   this.loginUserService.getUserById(this.userId).subscribe(data => {
+  //     this.user = data;
+  //     console.log(this.user.role);
+  //   })
+  // }
 
 }
