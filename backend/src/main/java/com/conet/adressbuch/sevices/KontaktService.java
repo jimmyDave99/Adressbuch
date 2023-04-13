@@ -19,7 +19,7 @@ public class KontaktService {
 
     @Autowired
     private KontaktRepository kontaktRepository;
-//    private UserRepository userRepository;
+    private UserRepository userRepository;
 //    private UserService userService;
     @Autowired
     private User user ;
@@ -28,17 +28,21 @@ public class KontaktService {
     }
 
     public List<Kontakt> getKontaktefilter(String userId) {
-
-        List<Kontakt> filteredList = new ArrayList<>();
-        List<Kontakt> allkontakt = kontaktRepository.findAll();
-        System.out.println(user.getUserId());
-        for (Kontakt kontakt : allkontakt) {
-            if (kontakt.getUserId().equals(userId)) {
-                filteredList.add(kontakt);
-                // break;
+        user = userRepository.findByUserId(userId);
+        if (user.getRole().equals("ADMIN")){
+            return getKontakte();
+        }else {
+            List<Kontakt> filteredList = new ArrayList<>();
+            List<Kontakt> allkontakt = kontaktRepository.findAll();
+            System.out.println(user.getUserId());
+            for (Kontakt kontakt : allkontakt) {
+                if (kontakt.getUserId().equals(userId)) {
+                    filteredList.add(kontakt);
+                    // break;
+                }
             }
+            return filteredList;
         }
-        return filteredList;
     }
 
     public Kontakt getKontakt(int kontaktId) {

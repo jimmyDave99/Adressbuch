@@ -14,8 +14,7 @@ import {User} from "../login/user";
   providers: [KontaktService]
 })
 export class KontaktAppComponent implements OnInit {
-  displayedColumns: string[] = ['nachname', 'vorname', 'anrede', 'telefon', "adresse", "aktione", 'userId'];
-  displayedColumnsNichtAdmin: string[] = ['nachname', 'vorname', 'anrede', 'telefon', "adresse", "aktione"];
+  displayedColumns: string[] = ['nachname', 'vorname', 'anrede', 'telefon', "adresse", "aktione", "userId"];
 
   message: any;
   kontakt: KontaktElement[] = [];
@@ -28,6 +27,10 @@ export class KontaktAppComponent implements OnInit {
     this.user = new User();
   }
 
+  toString(value: object): string {
+    return JSON.stringify(value);
+  }
+
   ngOnInit() {
     // this.fechtUser();
     console.log(this.loginUserService.getUserRole());
@@ -38,17 +41,18 @@ export class KontaktAppComponent implements OnInit {
   private getData() {
 
     if (this.loginUserService.getUserRole()=="ADMIN"){
-      this.kontaktService.getKontakte().subscribe((datas: KontaktElement[]) => {
-        this.kontakt = datas;
-        this.dataSource = new MatTableDataSource(this.kontakt);
+      // this.kontaktService.getKontakte().subscribe((datas: KontaktElement[]) => {
+      //   this.kontakt = datas;
+      //   this.dataSource = new MatTableDataSource(this.kontakt);
         this.isVisible = true;
-      });
-    }else {
+      // });
+    }
+    // else {
       this.kontaktService.getKontakteFilter(this.loginUserService.getUserName()).subscribe((datas: KontaktElement[]) => {
         this.kontakt = datas;
         this.dataSource = new MatTableDataSource(this.kontakt);
       });
-    }
+    // }
 
   }
 

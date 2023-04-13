@@ -28,7 +28,7 @@
     </ng-container>
 
     <ng-container matColumnDef="adresse">
-      <th mat-header-cell *matHeaderCellDef> Adresse </th>
+      <th mat-header-cell *matHeaderCellDef> Email </th>
       <td mat-cell *matCellDef="let element"> {{element.adresse}} </td>
     </ng-container>
 
@@ -36,22 +36,14 @@
       <th mat-header-cell *matHeaderCellDef> Aktionen </th>
       <td mat-cell *matCellDef="let element"> <i target="_blank" class="bi bi-pencil" routerLink="/editkontakt/{{element.id}}"></i> <i target="_blank" class="bi bi-trash deleteStyle" (click)="delete(element.id)"></i> </td>
     </ng-container>
-<!--    <span *ngIf="isVisible">-->
-      <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef> Besitzer </th>
-      <td mat-cell *matCellDef="let element"> Von <span class="besit">{{element.userId}}</span> </td>
+
+    <ng-container matColumnDef="userId">
+      <th [hidden]="!isVisible" mat-header-cell *matHeaderCellDef> Besitzer </th>
+      <td [hidden]="!isVisible" mat-cell *matCellDef="let element"> Von <span class="besit">{{element.userId}}</span> </td>
     </ng-container>
-<!--    </span>-->
 
-    <span *ngIf="!isVisible">
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsNichtAdmin"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsNichtAdmin;"></tr>
-    </span>
-
-    <span *ngIf="isVisible">
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </span>
   </table>
 
 </div>
