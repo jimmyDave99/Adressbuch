@@ -29,7 +29,7 @@ public class KontaktService {
 
     public List<Kontakt> getKontaktefilter(String userId) {
         user = userRepository.findByUserId(userId);
-        if (user.getRole().equals("ADMIN")){
+        if ("ADMIN".equals(user.getRole())){
             return getKontakte();
         }else {
             List<Kontakt> filteredList = new ArrayList<>();

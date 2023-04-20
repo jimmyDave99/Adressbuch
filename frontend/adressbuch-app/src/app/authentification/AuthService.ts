@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpError } from 'http-errors';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class AuthService {
   public getToken(): string {
 
       // return JSON.parse(localStorage.getItem(this.JWT_TOKEN)||'{}');
+
+    // if (localStorage.getItem(this.JWT_TOKEN)==null){
+    //   throw new HttpError("Unauthorized access. Error 401");
+      // window.location.href = '';
+    // }
 
     return localStorage.getItem(this.JWT_TOKEN) as any;
 

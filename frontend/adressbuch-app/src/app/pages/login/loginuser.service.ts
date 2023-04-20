@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {User} from "./user";
 import {AuthService} from "../../authentification/AuthService";
 import jwt_decode from 'jwt-decode';
+import { HttpError } from 'http-errors';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,17 @@ export class LoginuserService {
   public getUserName() {
     const token = this.authService.getToken();
     const decodedToken = jwt_decode(token) as any;
-    console.log(decodedToken)
-    return decodedToken.sub;
+    const expirationDate = new Date(0);
+    expirationDate.setUTCSeconds(decodedToken.exp);
+
+    const currentDate = new Date();
+    const isExpired = expirationDate < currentDate;
+    if (isExpired) {
+      // throw new HttpError("Unauthorized access. Error 401");
+      window.location.href = '/';
+    } else {
+      return decodedToken.sub;
+    }
   }
 
   public getUserRole() {

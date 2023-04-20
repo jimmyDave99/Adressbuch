@@ -40,19 +40,14 @@ export class KontaktAppComponent implements OnInit {
 
   private getData() {
 
-    if (this.loginUserService.getUserRole()=="ADMIN"){
-      // this.kontaktService.getKontakte().subscribe((datas: KontaktElement[]) => {
-      //   this.kontakt = datas;
-      //   this.dataSource = new MatTableDataSource(this.kontakt);
+    if (this.loginUserService.getUserRole()==="ADMIN"){
+
         this.isVisible = true;
-      // });
     }
-    // else {
       this.kontaktService.getKontakteFilter(this.loginUserService.getUserName()).subscribe((datas: KontaktElement[]) => {
         this.kontakt = datas;
         this.dataSource = new MatTableDataSource(this.kontakt);
       });
-    // }
 
   }
 
